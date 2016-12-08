@@ -30,8 +30,8 @@ def wartosc_x_do_funkcji(x):
 
 
 def losowanie():
-    for nr in range(0, populacja):
-        for i in range(0, ilosc_bitow):
+    for nr in xrange(0, populacja):
+        for i in xrange(0, ilosc_bitow):
             if random() > 0.5:
                 tablica_chromosomow[nr][i] = 1
             else:
@@ -48,7 +48,7 @@ def oblicz_funkcje_celu(chromosom):
 
 def ruletka():
     rand = uniform(0, 1)
-    for i in range(0, populacja):
+    for i in xrange(0, populacja):
         if rand < tablica_skumulowane_p[i]:
             osobnik = tablica_chromosomow[i]
             break
@@ -58,7 +58,7 @@ def ruletka():
 losowanie()
 
 # ITERACJE ALGORYTMU
-for i in range(0, 10000):
+for i in xrange(0, 10000):
     suma = 0
     y = []
     prawdopodobienstwa = []
@@ -66,16 +66,16 @@ for i in range(0, 10000):
     skumulowane_p = 0
 
     # OBLICZANIE SUMY WARTOSCI FUNKCJI CELU
-    for i in range(0, populacja):
+    for i in xrange(0, populacja):
         y.append(oblicz_funkcje_celu(tablica_chromosomow[i]))
         suma += y[i]
 
     # OBLICZANIE PRAWDOPODOBIENSTW
-    for i in range(0, populacja):
+    for i in xrange(0, populacja):
         prawdopodobienstwa.append((y[i]/suma))
 
     # OBLICZANIE SKUMULOWANYCH PRAWDOPODOBIENSTW
-    for i in range(0, populacja):
+    for i in xrange(0, populacja):
         skumulowane_p += prawdopodobienstwa[i]
         tablica_skumulowane_p.append(skumulowane_p)
 
@@ -93,7 +93,7 @@ for i in range(0, 10000):
     if random() < 0.8:
         nr = 0
         while nr < populacja:
-            for i in range(0, ilosc_bitow):
+            for i in xrange(0, ilosc_bitow):
                 if i < punkt_podzialu_na_x1_x2:
                     if i < punkt_podzialu_x1:
                         tablica_chromosomow_potomkow[nr][i] = tablica_par[nr][i]
@@ -115,7 +115,7 @@ for i in range(0, 10000):
     # MUTOWANIE
     nr = 0
     while nr < populacja:
-        for i in range(0, ilosc_bitow):
+        for i in xrange(0, ilosc_bitow):
             if tablica_chromosomow_potomkow[nr][i] == 0:
                 if random() < 0.05:
                     tablica_chromosomow_potomkow[nr][i] = 1
@@ -126,10 +126,10 @@ for i in range(0, 10000):
 
     tablica_chromosomow = tablica_chromosomow_potomkow
 
-    for i in range(0, populacja):
+    for i in xrange(0, populacja):
         wartosci_funkcji.append(oblicz_funkcje_celu(tablica_chromosomow[i]))
-    print max(wartosci_funkcji)
+    print min(wartosci_funkcji)
     print ""
 
 
-print "Znaleziona maksymalna wartosc funkcji wynosi: %f" % max(wartosci_funkcji)
+print "Znaleziona minimalna wartosc funkcji wynosi: %f" % min(wartosci_funkcji)
